@@ -10,7 +10,7 @@ function ToastProvider({ children }) {
   }])
 
   const submitToast = (variant, message) => {
-    const toast = { variant, message }
+    const toast = { variant, message, id: crypto.randomUUID() }
     const nextToasts = [...toasts, toast]
     setToasts(nextToasts)
   }
@@ -19,7 +19,13 @@ function ToastProvider({ children }) {
     setToasts([])
   }
 
-  const value = { toasts, clearToasts, submitToast }
+  const dismissToast = (id) => {
+    let nextStack = [...toasts]
+    nextStack = nextStack.filter((toast) => toast.id !== id)
+    setToasts(nextStack)
+  }
+
+  const value = { toasts, clearToasts, submitToast, dismissToast }
 
 
   return <ToastContext.Provider value={value}>
