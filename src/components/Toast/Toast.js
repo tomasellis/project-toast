@@ -18,20 +18,42 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast() {
+function Toast({ variant = "notice", show, children, handleDismiss, id }) {
+
+  const IconTag = ICONS_BY_VARIANT[variant]
+  const [dismiss, setDismiss] = React.useState(false)
+  const [isHidden, setIsHidden] = React.useState(true)
+
+  const dismissToast = () => {
+    setDismiss(true)
+    handleDismiss(id)
+  }
+
+  //if (!visible) return null
+
+  React.useEffect(() => {
+    if (show && !dismiss) setIsHidden(false)
+    if (dismiss) setIsHidden(true)
+  }, [dismiss, show])
+
   return (
-    <div className={`${styles.toast} ${styles.notice}`}>
+    <div id={id} key={id} className={`${styles.toast} ${styles[variant]}`} style={{ visibility: isHidden ? "hidden" : "visible" }}>
       <div className={styles.iconContainer}>
-        <Info size={24} />
+        <IconTag size={24} />
       </div>
       <p className={styles.content}>
-        16 photos have been uploaded
+        <VisuallyHidden>{variant} -</VisuallyHidden>
+        {children}
       </p>
-      <button className={styles.closeButton}>
+      <button
+        className={styles.closeButton}
+        onClick={dismissToast}
+        aria-label='Dismiss message'
+        aria-live="off"
+      >
         <X size={24} />
-        <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
-    </div>
+    </div >
   );
 }
 
