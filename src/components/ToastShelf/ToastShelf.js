@@ -5,15 +5,9 @@ import styles from './ToastShelf.module.css';
 import { ToastContext } from '../ToastProvider/ToastProvider';
 import useEscapeKey from '../../hooks/useEscapeKey';
 
-function ToastShelf({ toast = { variant: "notice", message: "" } }) {
+function ToastShelf() {
   //const [stack, setStack] = React.useState([{ message: "Test", variant: "notice", id: "" }])
-  const { toasts, setToasts } = React.useContext(ToastContext)
-
-  React.useEffect(() => {
-    if (toast.message !== "") {
-      setToasts((currentStack) => [...currentStack, { variant: toast.variant, message: toast.message, id: crypto.randomUUID() }])
-    }
-  }, [toast])
+  const { toasts, clearToasts } = React.useContext(ToastContext)
 
   const removeOnDismiss = (id) => {
     let nextStack = [...toasts]
@@ -22,7 +16,7 @@ function ToastShelf({ toast = { variant: "notice", message: "" } }) {
   }
 
   const handleEscape = React.useCallback(() => {
-    setToasts([])
+    clearToasts([])
   }, [])
 
   useEscapeKey(handleEscape)
