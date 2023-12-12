@@ -21,9 +21,11 @@ function ToastShelf({ toast = { variant: "notice", message: "" } }) {
     setToasts(nextStack)
   }
 
-  useEscapeKey(() => {
+  const handleEscape = React.useCallback(() => {
     setToasts([])
-  })
+  }, [])
+
+  useEscapeKey(handleEscape)
 
   return (
     <ol className={styles.wrapper}

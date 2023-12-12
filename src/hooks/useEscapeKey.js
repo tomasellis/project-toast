@@ -12,7 +12,7 @@ const useEscapeKey = (callback) => {
         return () => {
             removeEventListener("keydown", handleEscape)
         }
-    }, [])
+    }, [callback])
 }
 
 export default useEscapeKey
