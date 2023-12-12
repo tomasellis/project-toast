@@ -21,11 +21,9 @@ function ToastShelf({ toast = { variant: "notice", message: "" } }) {
     setToasts(nextStack)
   }
 
-  const removeAllToasts = () => {
+  useEscapeKey(() => {
     setToasts([])
-  }
-
-  useEscapeKey(removeAllToasts)
+  })
 
   return (
     <ol className={styles.wrapper}

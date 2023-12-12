@@ -1,10 +1,10 @@
 import React from 'react'
 
-const useEscapeKey = (handlePress) => {
+const useEscapeKey = (callback) => {
     React.useEffect(() => {
         const handleEscape = (event) => {
             if (event.code === "Escape") {
-                handlePress()
+                callback(event)
             }
         }
         addEventListener("keydown", handleEscape)
